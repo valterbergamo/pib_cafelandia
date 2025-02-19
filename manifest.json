@@ -54,14 +54,7 @@
 					"bundleName": "com.myorg.myapp.i18n.i18n"
 				}
 			},
-			"": {
-				"type": "sap.ui.model.odata.v4.ODataModel",
-				"settings": {
-					"serviceUrl": "/odata/airline/",
-					"synchronizationMode": "None",
-					"operationMode": "Server"
-				}
-			},
+			
 			"side": {
 				"type": "sap.ui.model.json.JSONModel",
 				"uri": "model/sideContent.json"
