@@ -1,0 +1,84 @@
+{
+	"selectedKey": "",
+
+	"navigation": [
+		{
+			"titleI18nKey": "Principal",
+			"icon": "sap-icon://home",
+			"expanded": true,
+			"key": "home",
+			"items": []
+		},
+		{
+			"titleI18nKey": "Administração",
+			"icon": "sap-icon://settings",
+			"expanded": false,
+			"key": "masterSettings",
+			"items": []
+		},
+		{
+			"titleI18nKey": "Serviços",
+			"icon": "sap-icon://line-chart",
+			"expanded": true,
+			"key": "statistics",
+			"items": [
+				{
+					"titleI18nKey": "Escala louvor",
+					"key": "escalaLouvor"
+				},
+				{
+					"titleI18nKey": "Escala lanche",
+					"key": "escalaLanche"
+				},
+				{
+					"titleI18nKey": "Check-in",
+					"key": "checkin"
+				}
+			]
+		}
+	],
+	"fixedNavigation": [
+		{
+			"titleI18nKey": "Como chegar?",
+			"icon": "sap-icon://map-2",
+			"key": "map"
+		},
+		{
+			"titleI18nKey": "Links úteis",
+			"icon": "sap-icon://chain-link",
+			"key": "importantLinks"
+		},
+		{
+			"titleI18nKey": "Sobre a PIB",
+			"icon": "sap-icon://compare",
+			"key": "sobre"
+		}
+	],
+	"masterSettings": [
+		{
+			"titleI18nKey": "sideContentSystemSettings",
+			"key": "systemSettings",
+			"selected": true
+		},
+		{
+			"titleI18nKey": "sideContentOrderSettings",
+			"key": "orderSettings",
+			"selected": false
+		},
+		{
+			"titleI18nKey": "sideContentSupplierSettings",
+			"key": "supplierSettings",
+			"selected": false
+		},
+		{
+			"titleI18nKey": "sideContentCampaignSettings",
+			"key": "campaignSettings",
+			"selected": false
+		},
+		{
+			"titleI18nKey": "sideContentShippingSettings",
+			"key": "shippingSettings",
+			"selected": false
+		}
+	]
+}
