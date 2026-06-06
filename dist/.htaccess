@@ -1,0 +1,14 @@
+# SPA (React Router) no Apache — devolve index.html em qualquer rota,
+# para que F5/refresh em /admin/eventos etc. não retorne 404.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Se o caminho for um arquivo ou pasta real, serve normalmente
+  RewriteCond %{REQUEST_FILENAME} -f [OR]
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteRule ^ - [L]
+
+  # Qualquer outra rota cai no index.html (deixa o React Router resolver)
+  RewriteRule ^ index.html [L]
+</IfModule>

@@ -104,4 +104,18 @@ export async function remove(entity, id) {
   return handle(res)
 }
 
+// ──────────────────────── Upload de arquivos ────────────────────────
+// Envia um File/Blob para o backend (disco) e retorna { url, path, filename, ... }.
+// Use a `url` retornada nos campos *Url (imageUrl, logoUrl, heroImageUrl, ...).
+export async function uploadFile(file) {
+  const fd = new FormData()
+  fd.append('file', file)
+  const res = await fetch(`${API_URL}/upload`, {
+    method: 'POST',
+    headers: authHeaders(), // não definir Content-Type: o browser põe o boundary
+    body: fd,
+  })
+  return handle(res)
+}
+
 export { API_URL }

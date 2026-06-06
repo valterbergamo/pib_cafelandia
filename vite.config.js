@@ -3,8 +3,9 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // Caminhos relativos no build (./assets/...) — evita erro de assets no Apache
-  base: './',
+  // Site servido na RAIZ do domínio → base absoluta. Assets sempre em /assets/...
+  // (com base relativa as rotas aninhadas tipo /admin/eventos quebram os assets no F5)
+  base: '/',
   plugins: [react()],
   server: {
     port: 5173,
