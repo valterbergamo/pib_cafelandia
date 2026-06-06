@@ -1,87 +1,77 @@
-# UI5 Application pib.cafelandia
+# PIB Cafelândia — Site institucional
 
-Insert the purpose of this project and some interesting info here...
+Site moderno e responsivo da **Primeira Igreja Batista de Cafelândia**, com painel
+administrativo completo. Construído em **React + Vite + Tailwind CSS** e integrado ao
+backend **SAP CAP** (`service_pib`).
 
-## Description
+## ✨ Recursos
 
-This app demonstrates a setup for developing UI5 applications.
+**Site público**
+- Home com banner (hero), sobre/missão/visão, horários de culto, eventos em destaque e CTA de ofertas
+- Páginas: Sobre, Agenda, Eventos (lista + detalhe), Contribua (PIX / dados bancários), Contato (formulário + mapa)
+- Tema (cores, logo, textos, imagens) controlado 100% pelo painel — sem mexer no código
 
-## Requirements
+**Painel administrativo** (`/admin`)
+- Login com JWT
+- Dashboard com indicadores
+- Configuração do site (identidade, cores, hero, sobre, pastor, contato, redes, contribuição, rodapé)
+- CRUD de Eventos, Agenda/Cultos, Parceiros
+- Inscrições recebidas pelo formulário
+- Gestão de usuários (papéis admin/user, senha)
 
-Either [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) for dependency management.
+## 🚀 Como rodar
 
-## Preparation
-
-Use `npm` (or `yarn`) to install the dependencies:
-
-```sh
+### 1. Backend (`service_pib`)
+```bash
+cd ../service_pib
 npm install
+npm start          # ou: cds watch  → sobe em http://localhost:4004
+```
+> Na primeira execução é criado automaticamente o usuário **admin / 123456**.
+> Os segredos (banco + JWT) ficam em `service_pib/.cdsrc-private.json` (fora do git).
+
+### 2. Frontend (este projeto)
+```bash
+npm install
+npm run dev        # http://localhost:5173
+```
+Ajuste a URL do backend em `.env`:
+```
+VITE_API_URL=http://localhost:4004
 ```
 
-(To use yarn, just do `yarn` instead.)
-
-## Run the App
-
-Execute the following command to run the app locally for development in watch mode (the browser reloads the app automatically when there are changes in the source code):
-
-```sh
-npm start
+### Build de produção
+```bash
+npm run build      # gera /dist
+npm run preview    # serve o /dist localmente
 ```
 
-As shown in the terminal after executing this command, the app is then running on http://localhost:8080/index.html. A browser window with this URL should automatically open.
+## 🔐 Acesso ao painel
+- URL: `/admin` (link discreto no rodapé do site)
+- Usuário inicial: **admin**
+- Senha inicial: **123456** → **altere em Usuários após o primeiro login**
 
-(When using yarn, do `yarn start` instead.)
+> O OAuth2 pode ser adicionado depois, substituindo o fluxo de `login()` em
+> `src/context/AuthContext.jsx` e `src/api/client.js`.
 
-## Build the App
-
-### Unoptimized (but quick)
-
-Execute the following command to build the project and get an app that can be deployed:
-
-```sh
-npm run build
+## 🗂️ Estrutura
+```
+src/
+  api/client.js              # cliente OData (auth + CRUD)
+  context/AuthContext.jsx    # autenticação JWT
+  context/SiteConfigContext  # configuração do site + tema dinâmico
+  components/                # Navbar, Footer, cards, admin (layout, modal, CRUD genérico)
+  pages/                     # páginas públicas
+  pages/admin/               # páginas do painel
+  lib/format.js              # datas, dias da semana, horários
 ```
 
-The result is placed into the `dist` folder. To start the generated package, just run
+## 🔌 Integração com o backend
+| Recurso        | Endpoint                                   |
+|----------------|--------------------------------------------|
+| Login          | `POST /odata/v4/auth/token`                |
+| Conteúdo       | `GET /odata/v4/processor/<Entidade>`       |
+| Escrita (admin)| `POST/PATCH/DELETE` com `Authorization: Bearer <token>` |
 
-```sh
-npm run start:dist
-```
-
-Note that `index.html` still loads the UI5 framework from the relative URL `resources/...`, which does not physically exist, but is only provided dynamically by the UI5 tooling. So for an actual deployment you should change this URL to either [the CDN](https://sdk.openui5.org/#/topic/2d3eb2f322ea4a82983c1c62a33ec4ae) or your local deployment of UI5.
-
-(When using yarn, do `yarn build` and `yarn start:dist` instead.)
-
-### Optimized
-
-For an optimized self-contained build (takes longer because the UI5 resources are built, too), do:
-
-```sh
-npm run build:opt
-```
-
-To start the generated package, again just run:
-
-```sh
-npm run start:dist
-```
-
-In this case, all UI5 framework resources are also available within the `dist` folder, so the folder can be deployed as-is to any static web server, without changing the bootstrap URL.
-
-With the self-contained build, the bootstrap URL in `index.html` has already been modified to load the newly created `sap-ui-custom.js` for bootstrapping, which contains all app resources as well as all needed UI5 JavaScript resources. Most UI5 resources inside the `dist` folder are for this reason actually **not** needed to run the app. Only the non-JS-files, like translation texts and CSS files, are used and must also be deployed. (Only when for some reason JS files are missing from the optimized self-contained bundle, they are also loaded separately.)
-
-(When using yarn, do `yarn build:opt` and `yarn start:dist` instead.)
-
-## Check the Code
-
-To lint the code, do:
-
-```sh
-npm run lint
-```
-
-(Again, when using yarn, do `yarn lint` instead.)
-
-## License
-
-This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSE) file.
+Leitura é pública; escrita exige token de **administrador**. Inscrições (`Subscriptions`)
+podem ser criadas publicamente pelo formulário de contato.

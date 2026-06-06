@@ -1,0 +1,20 @@
+{
+  "sap.app": {
+    "dataSources": {
+      "mainService": {
+        "uri": "/api/pib/odata/v4/processor/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      },
+      "authService": {
+        "uri": "/pib/odata/v4/auth/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  }
+}
