@@ -1,8 +1,11 @@
 # SPA (React Router) no Apache — devolve index.html em qualquer rota,
 # para que F5/refresh em /admin/eventos etc. não retorne 404.
+#
+# Atrás do nginx, o Apache serve este site sob /pib/ (nginx: / -> localhost:5082/pib/),
+# por isso o RewriteBase é /pib/.
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /
+  RewriteBase /pib/
 
   # Se o caminho for um arquivo ou pasta real, serve normalmente
   RewriteCond %{REQUEST_FILENAME} -f [OR]
