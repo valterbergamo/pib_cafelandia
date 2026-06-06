@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useSiteConfig } from '../context/SiteConfigContext.jsx'
+import manifest from '../manifest.json'
+
+const APP_VERSION = manifest['sap.app']?.applicationVersion?.version || '—'
 
 function Social({ href, label, children }) {
   if (!href) return null
@@ -79,7 +82,10 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="container-x flex flex-col items-center justify-between gap-2 py-5 text-xs text-slate-400 sm:flex-row">
           <p>© {year} {config.nameChurch}. Todos os direitos reservados.</p>
-          <Link to="/admin" className="hover:text-white">Área administrativa</Link>
+          <div className="flex items-center gap-3">
+            <span className="text-slate-500" title="Versão do site">v{APP_VERSION}</span>
+            <Link to="/admin" className="hover:text-white">Área administrativa</Link>
+          </div>
         </div>
       </div>
     </footer>

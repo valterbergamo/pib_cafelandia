@@ -1,8 +1,16 @@
 // Cliente HTTP fino para o backend SAP CAP (OData v4).
-const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:4004').replace(/\/$/, '')
+// As bases vêm dos dataSources do manifest.json — caminhos RELATIVOS que
+// funcionam tanto em dev (proxy do Vite) quanto em prod (proxy do Apache).
+// Assim o build não fica preso a http://localhost:4004.
+import manifest from '../manifest.json'
 
-const AUTH = `${API_URL}/odata/v4/auth`
-const PROC = `${API_URL}/odata/v4/processor`
+const ds = manifest['sap.app']?.dataSources ?? {}
+const noSlash = (s) => (s || '').replace(/\/+$/, '')
+
+const PROC = noSlash(ds.mainService?.uri) // ex.: /api/pib/odata/v4/processor
+const AUTH = noSlash(ds.authService?.uri) // ex.: /api/pib/odata/v4/auth
+// Raiz do backend (sem o /odata/...) — usada por /upload e /files
+const API_URL = PROC.split('/odata')[0] || ''
 
 const TOKEN_KEY = 'pib_token'
 

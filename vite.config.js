@@ -13,7 +13,9 @@ export default defineConfig({
     proxy: {
       '/api/pib': {
         target: 'http://localhost:4004',
-        changeOrigin: true
+        changeOrigin: true,
+        // backend serve em /odata, /upload, /files — remove o prefixo /api/pib
+        rewrite: (path) => path.replace(/^\/api\/pib/, '')
       },
       // Keycloak (login do admin) — encaminha para o servidor real em dev
       '/keycloak': {
